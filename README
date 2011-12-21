@@ -1,0 +1,34 @@
+Author: Alan Perez-Rathke (alan@spantree.net)
+
+This is a simple implementation of the ZooKeeper leader election algorithm as outlined here:
+
+http://zookeeper.apache.org/doc/trunk/recipes.html#sc_leaderElection
+
+Classes:
+
+*ZooElectableClient:
+- An abstract ZooKeeper client that implements the leader election algorithm.
+- The method performRole() must be implemented in a child class.  This function is intended to
+contain the work that the client node must actually perform (conditioned on whether or not it
+is the leader).
+
+*ZooTestElectableClient:
+- A simple demo ZooKeeper client that simply outputs its state after any leader election.
+
+*ZooZNodeDeletionMonitor: Based on http://zookeeper.apache.org/doc/current/javaExample.html#ch_Introduction
+- A monitor that watches for znode deletion and informs its listener when this occurs
+
+Scripts (*nix):
+
+./build.sh - will compile the java sources
+./run.sh - will run an instance of the test client
+
+Usage:
+
+The clients assume that a server is running in the background. See:
+
+http://zookeeper.apache.org/doc/trunk/zookeeperStarted.html
+
+for documentation on downloading and starting a ZooKeeper server.  To demo, run multiple
+client instances (each in separate terminal windows), then kill the leader instance to
+observe a new leader election.
